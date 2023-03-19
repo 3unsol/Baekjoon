@@ -40,7 +40,7 @@ public class Main {
 							cnt++;
 						}
 						// 내가 1이면서 배열 끝이랑 맞닿아있으면 cnt++
-						else if (nr < 1 || nr > 100 || nc < 1 || nr > 100) {
+						if (nr < 1 || nr > 100 || nc < 1 || nr > 100) {
 							cnt++;
 						}
 					}
