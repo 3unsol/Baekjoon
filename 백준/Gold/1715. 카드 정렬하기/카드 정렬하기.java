@@ -21,12 +21,11 @@ public class Main {
 //			// 더한 값을 큐에 넣어준다.
 //		} else {
 		// tmp : 두 묶음 더한 값
-//			long tmp = 0;
+		int tmp = 0;
 		while (pq.size() > 1) {
-			int tmp1 = pq.poll();
-			int tmp2 = pq.poll();
-			sum += (tmp1 + tmp2);
-			pq.offer(tmp1 + tmp2);
+			tmp = pq.poll() + pq.poll();
+			sum += (tmp);
+			pq.offer(tmp);
 		}
 //		}
 		System.out.println(sum);
