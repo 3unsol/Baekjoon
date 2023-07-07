@@ -1,17 +1,25 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int m = sc.nextInt();
-        int[] prefix = new int[n + 1];
+static int[] prefix;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        prefix = new int[n + 1];
+        st = new StringTokenizer(br.readLine());
         for(int i = 1; i <= n; i++){
-            prefix[i] = prefix[i - 1] + sc.nextInt();
+            prefix[i] = prefix[i - 1] + Integer.parseInt(st.nextToken());;
         }
         for(int i = 0; i < m; i++) {
-            int a = sc.nextInt();
-            int b = sc.nextInt();
+        st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
             System.out.println(prefix[b] - prefix[a - 1]);
         }
     }
