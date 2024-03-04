@@ -16,10 +16,6 @@ public class Main {
 
         dist = new int[N + 1][N + 1];
 
-        for(int r = 1; r <= N; r++) {
-            dist[r][r] = 0;
-        }
-
         for(int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
 
