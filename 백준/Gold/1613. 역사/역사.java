@@ -32,7 +32,9 @@ public class Main {
 
         for(int k = 1; k <= N; k++) {
             for(int i = 1; i <= N; i++) {
+                if(i == k) continue;
                 for(int j = 1; j <= N; j++) {
+                    if(j == i || j == k) continue;
                     if(dist[i][k] == -1 && dist[k][j] == -1) {
                         dist[i][j] = -1;
                     }else if(dist[i][k] == 1 && dist[k][j] == 1) {
@@ -43,12 +45,15 @@ public class Main {
         }
 
         int s = Integer.parseInt(br.readLine());
+        StringBuilder sb = new StringBuilder();
 
         for(int i = 0; i < s; i++) {
             st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
-            System.out.println(dist[a][b]);
+            sb.append(dist[a][b]).append("\n");
         }
+
+        System.out.println(sb);
     }
 }
