@@ -7,6 +7,7 @@ public class Main {
     static int W, H;
     static int[][] map;
     static boolean[][] isVisited;
+    static Node start;
     static Queue<Node> q;
     static Queue<Node> fire;
     static int[] dr = {-1, 0, 1, 0};
@@ -35,7 +36,8 @@ public class Main {
 
                     // 상근이
                     if(sign == '@') {
-                        q.offer(new Node(r, c, 0));
+                        start = new Node(r, c, 0);
+                        q.offer(start);
                         isVisited[r][c] = true;
                         map[r][c] = -1;
 
@@ -106,8 +108,8 @@ public class Main {
                 int nr = now.r + dr[dir];
                 int nc = now.c + dc[dir];
 
-                // 끝쪽
-                if(nr < 0 || nr >= H || nc < 0 || nc >= W) return now.dist + 1;
+                // 이동 못 함
+                if(!canMove(nr, nc)) continue;
                 // 이미 들른 곳
                 if(isVisited[nr][nc]) continue;
                 // 벽
