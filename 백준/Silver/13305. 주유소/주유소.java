@@ -12,25 +12,24 @@ public class Main {
 
         N = Integer.parseInt(br.readLine());
         distance = new int[N - 1];
-        cost = new int[N];
+        cost = new int[N - 1];
 
         StringTokenizer distInfo = new StringTokenizer(br.readLine());
         StringTokenizer costInfo = new StringTokenizer(br.readLine());
 
-        for(int i = 0; i < N; i++) {
-            cost[i] = Integer.parseInt(costInfo.nextToken());
-            if(i == N - 1) continue;
+        for(int i = 0; i < N - 1; i++) {
             distance[i] = Integer.parseInt(distInfo.nextToken());
+            cost[i] = Integer.parseInt(costInfo.nextToken());
         }
 
-        long totalCost = distance[0] * cost[0];
-        int minCost = cost[0];
+        long totalCost = 0;
+        long minCost = cost[0];
 
-        for(int i = 1; i < N - 1; i++) {
+        for(int i = 0; i < N - 1; i++) {
             if(minCost > cost[i]) {
                 minCost = cost[i];
             }
-            totalCost += minCost * distance[i];
+            totalCost += (minCost * distance[i]);
         }
 
         System.out.println(totalCost);
