@@ -6,9 +6,9 @@ public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
-
+        
         Map<String, Integer> map = new HashMap<>();
-
+        
         int total = 0;
         String name;
 
@@ -21,7 +21,8 @@ public class Main {
 
         Collections.sort(list);
 
-        for(String tree : list) {
+        for(int i = 0; i < list.size(); i++) {
+            String tree = list.get(i);
             int cnt = map.get(tree) * 100;
             sb.append(tree + " " + String.format("%.4f", (double)cnt / (double)total) + "\n");
         }
