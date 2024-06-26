@@ -11,6 +11,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
+        StringBuilder sb = new StringBuilder();
         int testCase = Integer.parseInt(br.readLine());
         for(int tc = 1; tc <= testCase; tc++) {
 
@@ -32,7 +33,8 @@ public class Main {
                 }
             }
 
-            System.out.println(cnt);
+            sb.append(cnt).append("\n");
         }
+        System.out.println(sb);
     }
 }
