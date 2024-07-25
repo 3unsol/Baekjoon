@@ -57,9 +57,9 @@ public class Main {
 
             Node now = pq.poll();
 
-//            if(dist[now.r][now.c] < now.cost) {
-//                continue;
-//            }
+            if(dist[now.r][now.c] < now.cost) {
+                continue;
+            }
 
             for(int dir = 0; dir < 4; dir++) {
 
