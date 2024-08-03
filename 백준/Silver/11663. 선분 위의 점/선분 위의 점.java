@@ -11,6 +11,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
+        StringBuilder sb = new StringBuilder();
 
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
@@ -31,8 +32,10 @@ public class Main {
             int start = Integer.parseInt(st.nextToken());
             int end = Integer.parseInt(st.nextToken());
 
-            System.out.println(binarySearch(start, end));
+            sb.append(binarySearch(start, end)).append("\n");
         }
+
+        System.out.print(sb);
     }
 
     static int binarySearch(int start, int end) {
