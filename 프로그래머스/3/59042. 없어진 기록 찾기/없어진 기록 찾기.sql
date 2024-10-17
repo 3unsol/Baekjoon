@@ -1,7 +1,7 @@
 -- 코드를 입력하세요
-SELECT O.ANIMAL_ID, O.NAME
-FROM ANIMAL_OUTS AS O
-LEFT JOIN ANIMAL_INS AS I
-ON O.ANIMAL_ID = I.ANIMAL_ID
-WHERE I.ANIMAL_ID IS NULL
-ORDER BY ANIMAL_ID;
+SELECT ao.animal_id, ao.name
+from animal_outs ao
+left join animal_ins ai
+on ao.animal_id = ai.animal_id
+where ai.animal_id is null
+order by ao.animal_id and ao.name;
