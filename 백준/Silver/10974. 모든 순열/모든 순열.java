@@ -6,6 +6,7 @@ public class Main {
     static int N;
     static int[] result;
     static boolean[] isUsed;
+    static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -13,15 +14,16 @@ public class Main {
         result = new int[N];
         isUsed = new boolean[N + 1];
         perm(0);
+        System.out.print(sb);
     }
 
     static void perm(int k) {
 
         if(k == N) {
             for(int i = 0; i < N; i++) {
-                System.out.print(result[i] + " ");
+                sb.append(result[i] + " ");
             }
-            System.out.println();
+            sb.append("\n");
             return;
         }
 
