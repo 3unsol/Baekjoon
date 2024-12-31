@@ -8,6 +8,8 @@ public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
+        StringBuilder sb = new StringBuilder();
+        
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
 
@@ -25,8 +27,8 @@ public class Main {
                     set.remove(keyword);
                 }
             }
-            System.out.println(set.size());
+            sb.append(set.size()).append("\n");
         }
-
+        System.out.print(sb);
     }
 }
