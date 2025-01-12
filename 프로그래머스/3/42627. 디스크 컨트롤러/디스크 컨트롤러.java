@@ -56,7 +56,7 @@ class Solution {
                 // 완료한 작업 개수
                 index++;
             } else { // 큐가 비었다!
-                startTime++;
+                startTime = jobs[index][0];
             }
         }
         
