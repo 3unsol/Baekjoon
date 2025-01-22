@@ -9,7 +9,7 @@ public class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
+        int C = Integer.parseInt(st.nextToken());
 
         int[] arr = new int[N];
 
@@ -17,35 +17,38 @@ public class Main {
             arr[i] = Integer.parseInt(br.readLine());
         }
 
+        // 집 정렬
         Arrays.sort(arr);
 
-        int start = 0;
-        int end = arr[N - 1] - arr[0] + 1;
-        int mid;
+        // 이분탐색
+        int start = 1; // 공유기 설치 최소 간격
+        int end = arr[N - 1] - arr[0] + 1; // 공유기 설치 최대 간격
 
-        while(start < end) {
+        while(start <= end) {
 
-            mid = (start + end) / 2;
-
-            // 공유기 설치 (첫 번째 집은 무조건 설치)
+            // 만드려는 최소 거리
+            int mid = (start + end) / 2;
+            // 설치한 공유기 개수
             int cnt = 1;
-            int recent = arr[0];
+            // 공유기 설치한 집
+            int prev = arr[0];
 
             for(int i = 1; i < N; i++) {
-                int locate = arr[i]; // 똑똑똑 안녕하세요
-                if(locate - recent >= mid) { // 이 집에 공유기 설치 가능할까여?
-                    cnt++; // 네. 설치하겠습니다.
-                    recent = locate; // 여기 싸인 부탁드려요
+                // 만드려는 최소 거리보다 집이 멀리 있으면 공유기 설치
+                if(arr[i] - prev >= mid) {
+                    cnt++;
+                    prev = arr[i];
                 }
             }
 
-            if(cnt < M) { // 공유기가 남는뎁쇼
-                end = mid; // 설치 거리를 줄이거라
-            } else { // 같거나 모자랍니다요
-                start = mid + 1; // 거리를 늘리면서 최소거리를 최대로 만들거라
+            // 공유기 설치 개수가 적으면 최소 거리 줄이기
+            if(cnt < C) {
+                end = mid - 1;
+            } else { // 같거나 많으면 최소 거리를 늘려본다.
+                start = mid + 1;
             }
         }
-
+        // start는 초과할 때의 값을 가지고 있어서 -1
         System.out.println(start - 1);
     }
 }
