@@ -5,8 +5,6 @@ import java.util.*;
 **/
 class Solution {
     public int solution(int distance, int[] rocks, int n) {
-        int answer = 0;
-        
         // 정렬
         Arrays.sort(rocks);
         
@@ -31,7 +29,6 @@ class Solution {
             if(distance - prev < mid) cnt++; // 기준점에서 도착지점까지의 거리가 최소 거리보다 짧으면 기준점 돌 제거
             
             if(cnt <= n) { // 최소 거리에 맞춰 돌을 제거했을 때 n개보다 적으면 최소거리를 늘린다.
-                answer = mid;
                 start = mid + 1;
             } else { // n개보다 많으면 최소 거리를 줄임
                 end = mid - 1;
