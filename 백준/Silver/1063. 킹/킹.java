@@ -1,89 +1,154 @@
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
-class Main {
-	static final int MAX_SIZE = 8;
-	static final int KING = 0;
-	static final int STONE = 1;
+public class Main {
 
-	static Map<String, Pos> direction = new HashMap<>();
+    static int kingR, kingC;
+    static int stoneR, stoneC;
+    static int N;
 
-	public static void main(String[] args) throws Exception {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		Pos[] poses = new Pos[2];
-		for (int i = 0; i < 2; i++) {
-			char[] input = st.nextToken().toCharArray();
-			poses[i] = new Pos(input[0] - 'A' + 1, input[1] - '0');
-		}
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-		initializeDirection();
+        String king = st.nextToken();
+        kingR = king.charAt(1) - '0';
+        kingC = king.charAt(0) - 'A' + 1;
 
-		int N = Integer.parseInt(st.nextToken());
+        String stone = st.nextToken();
+        stoneR = stone.charAt(1) - '0';
+        stoneC = stone.charAt(0) - 'A' + 1;
 
-		for (int i = 0; i < N; i++) {
-			// 방향 구하기
-			String dir = br.readLine();
-			int dx = direction.get(dir).x;
-			int dy = direction.get(dir).y;
+        N = Integer.parseInt(st.nextToken());
 
-			// 다음 좌표
-			int nx = poses[KING].x + dx;
-			int ny = poses[KING].y + dy;
+        for(int i = 0; i < N; i++) {
+            String order = br.readLine();
 
-			// 범위 벗어나면 건너뜀.
-			if (!(1 <= nx && nx <= MAX_SIZE) || !(1 <= ny && ny <= MAX_SIZE)) {
-				continue;
-			}
+            if(order.equals("R")) {
+                if(canMove(kingR, kingC + 1)) {
+                    if(isStone(kingR, kingC + 1)) {
+                        if(canMove(stoneR, stoneC + 1)) {
+                            stoneC++;
+                        } else {
+                            continue;
+                        }
+                    }
+                    kingC++;
+                }
+            }
 
-			// 움직일 위치에 돌이 있다면 돌을 밀어냄.
-			if (nx == poses[STONE].x && ny == poses[STONE].y) {
-				int snx = poses[STONE].x + dx;
-				int sny = poses[STONE].y + dy;
+            else if(order.equals("L")) {
+                if(canMove(kingR, kingC - 1)) {
+                    if(isStone(kingR, kingC - 1)) {
+                        if(canMove(stoneR, stoneC - 1)) {
+                            stoneC--;
+                        } else {
+                            continue;
+                        }
+                    }
+                    kingC--;
+                }
+            }
 
-				// 돌이 범위를 벗어나면 건너뜀.
-				if (!(1 <= snx && snx <= MAX_SIZE) || !(1 <= sny && sny <= MAX_SIZE)) {
-					continue;
-				}
+            else if(order.equals("B")) {
+                if(canMove(kingR - 1, kingC)) {
+                    if(isStone(kingR - 1, kingC)) {
+                        if(canMove(stoneR - 1, stoneC)) {
+                            stoneR--;
+                        } else {
+                            continue;
+                        }
+                    }
+                    kingR--;
+                }
+            }
 
-				poses[STONE].x = snx;
-				poses[STONE].y = sny;
-			}
+            else if(order.equals("T")) {
+                if(canMove(kingR + 1, kingC)) {
+                    if(isStone(kingR + 1, kingC)) {
+                        if(canMove(stoneR + 1, stoneC)) {
+                            stoneR++;
+                        } else {
+                            continue;
+                        }
+                    }
+                    kingR++;
+                }
+            }
 
-			// 다음 좌표로 돌 갱신하기
-			poses[KING].x = nx;
-			poses[KING].y = ny;
-		}
+            else if(order.equals("RT")) {
+                if(canMove(kingR + 1, kingC + 1)) {
+                    if(isStone(kingR + 1, kingC + 1)) {
+                        if(canMove(stoneR + 1, stoneC + 1)) {
+                            stoneR++;
+                            stoneC++;
+                        } else {
+                            continue;
+                        }
+                    }
+                    kingR++;
+                    kingC++;
+                }
+            }
 
-		System.out.println(poses[KING]);
-		System.out.println(poses[STONE]);
+            else if(order.equals("LT")) {
+                if(canMove(kingR + 1, kingC - 1)) {
+                    if(isStone(kingR + 1, kingC - 1)) {
+                        if(canMove(stoneR + 1, stoneC - 1)) {
+                            stoneR++;
+                            stoneC--;
+                        } else {
+                            continue;
+                        }
+                    }
+                    kingR++;
+                    kingC--;
+                }
+            }
 
-	}
+            else if(order.equals("RB")) {
+                if(canMove(kingR - 1, kingC + 1)) {
+                    if(isStone(kingR - 1, kingC + 1)) {
+                        if(canMove(stoneR - 1, stoneC + 1)) {
+                            stoneR--;
+                            stoneC++;
+                        } else {
+                            continue;
+                        }
+                    }
+                    kingR--;
+                    kingC++;
+                }
+            }
 
-	static void initializeDirection() {
-		direction.put("R", new Pos(1, 0));
-		direction.put("L", new Pos(-1, 0));
-		direction.put("B", new Pos(0, -1));
-		direction.put("T", new Pos(0, 1));
-		direction.put("RT", new Pos(1, 1));
-		direction.put("LT", new Pos(-1, 1));
-		direction.put("RB", new Pos(1, -1));
-		direction.put("LB", new Pos(-1, -1));
-	}
+            else if(order.equals("LB")) {
+                if(canMove(kingR - 1, kingC - 1)) {
+                    if(isStone(kingR - 1, kingC - 1)) {
+                        if(canMove(stoneR - 1, stoneC - 1)) {
+                            stoneR--;
+                            stoneC--;
+                        } else {
+                            continue;
+                        }
+                    }
+                    kingR--;
+                    kingC--;
+                }
+            }
+        }
 
-	static class Pos {
-		int x;
-		int y;
+        System.out.print((char)(kingC + 'A' - 1));
+        System.out.println(kingR);
+        System.out.print((char)(stoneC + 'A' - 1));
+        System.out.println(stoneR);
+    }
 
-		Pos(int x, int y) {
-			this.x = x;
-			this.y = y;
-		}
+    static boolean canMove(int r, int c) {
+        return r >= 1 && c >= 1 && r <= 8 && c <= 8;
+    }
 
-		@Override
-		public String toString() {
-//			return String.format("%d %d", x, y);
-			return String.format("%c%d", x + 'A' - 1, y);
-		}
-	}
+    static boolean isStone(int r, int c) {
+        return stoneR == r && stoneC == c;
+    }
 }
