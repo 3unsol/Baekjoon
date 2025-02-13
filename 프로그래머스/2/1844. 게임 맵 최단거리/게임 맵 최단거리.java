@@ -1,5 +1,8 @@
 import java.util.*;
 
+// 모든 경로 탐색 : dfs
+// 최단 거리 탐색 : bfs
+
 class Solution {
     
     static int[][] map;
@@ -30,6 +33,7 @@ class Solution {
             Node now = q.poll();
             if(now.r == N - 1 && now.c == M - 1) {
                 answer = now.depth;
+                return;
             }
             for(int dir = 0; dir < 4; dir++) {
                 int nr = now.r + dr[dir];
