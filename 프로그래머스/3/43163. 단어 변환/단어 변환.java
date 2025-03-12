@@ -1,51 +1,76 @@
 import java.util.*;
 
+/**
+1. target이 words[] 안에 없으면 0 return
+2. 한 번에 한 개만 + words에 포함되어야 함
+2-1. begin과 words[i] 다른 철자 개수 비교
+2-2. cnt == 1 단어 dfs
+3. dfs(깊이, 현재 단어 인덱스) + 방문 배열, words 배열
+4. target 일 때 return 깊이
+**/
+
 class Solution {
     
     static boolean[] isVisited;
-    static int answer = 0;
+    static int answer;
     
     public int solution(String begin, String target, String[] words) {
+        
+        // words 배열에 target이 있는지 확인
+        if(!isContains(target, words)) {
+            return 0;
+        }
         
         // 방문 배열
         isVisited = new boolean[words.length];
         
-        // 깊이우선탐색
-        dfs(begin, target, words, 0);
+        // dfs
+        dfs(0, begin, target, words);
         
         return answer;
     }
     
-    // begin : 현재 단어, target : 목표 단어, words : 가능한 단어 목록, cnt : 몇 번 바꿨니?
-    static void dfs(String begin, String target, String[] words, int cnt) {
+    // dfs(깊이, 현재 단어, 타겟 단어, 단어 배열)
+    public void dfs(int depth, String now, String target, String[] words) {
         
-        // 목표 단어가 되었다!
-        if(begin.equals(target)) {
-            answer = cnt;
+        // 타겟 단어면 깊이 반환
+        if(now.equals(target)) {
+            answer = depth;
             return;
         }
         
-        // 가능한 단어 목록을 돌아봅니다.
+        // 단어 배열 돌면서 차이가 1이고 방문하지 않은 단어 탐색
         for(int i = 0; i < words.length; i++) {
-            
-            // 이미 본 애면 지나칩니다.
-            if(isVisited[i]) continue;
-            
-            // 현재 단어랑 words[i]랑 같은 철자 개수
-            int sameCnt = 0;
-            
-            for(int j = 0; j < begin.length(); j++) {
-                if(begin.charAt(j) == words[i].charAt(j)) {
-                    sameCnt++;
-                }
-            }
-            
-            // 하나 빼고 같으면 dfs 돌리기 (한번에 하나만 바꿀 수 있음)
-            if(sameCnt == begin.length() - 1) {
+            if(findDiff(now, words[i], words) && !isVisited[i]) {
                 isVisited[i] = true;
-                dfs(words[i], target, words, cnt + 1);
+                dfs(depth + 1, words[i], target, words);
                 isVisited[i] = false;
             }
         }
+    }
+    
+    // 차이가 1인지 확인하는 메서드
+    public boolean findDiff(String begin, String target, String[] words) {
+        
+        int cnt = 0;
+        
+        for(int i = 0; i < begin.length(); i++) {
+            if(begin.charAt(i) != target.charAt(i)) {
+                cnt++;
+            }
+        }
+        
+        if(cnt == 1) {
+            return true;
+        }
+        return false;
+    }
+    
+    // 단어 배열 안에 타겟 단어가 있는지 확인하는 메서드
+    public boolean isContains(String target, String[] words) {
+        for(int i = 0; i < words.length; i++) {
+            if(target.equals(words[i])) return true;
+        }
+        return false;
     }
 }
